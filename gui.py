@@ -40,3 +40,32 @@ class Line:
             self.dot1.x, self.dot1.y, self.dot2.x, self.dot2.y,
             fill=fill_color, width=2
         )
+
+class Cell:
+    def __init__(self, x1, y1, x2, y2, window):
+        # x1, y1 - top left corner, x2, y2 - bottom right corner
+        self.has_left_wall = True
+        self.has_right_wall = True
+        self.has_top_wall = True
+        self.has_bottom_wall = True
+        self.__top_left_dot = Point(x1, y1)
+        self.__top_right_dot = Point(x2, y1)
+        self.__bottom_left_dot = Point(x1, y2)
+        self.__bottom_right_dot = Point(x2, y2)
+        self.__window = window
+
+    def draw(self):
+        if self.has_left_wall:
+            left_wall = Line(self.__top_left_dot, self.__bottom_left_dot)
+            self.__window.draw_line(left_wall, 'red')
+        if self.has_right_wall:
+            right_wall = Line(self.__top_right_dot, self.__bottom_right_dot)
+            self.__window.draw_line(right_wall, 'red')
+        if self.has_top_wall:
+            top_wall = Line(self.__top_right_dot, self.__top_left_dot)
+            self.__window.draw_line(top_wall, 'red')
+        if self.has_bottom_wall:
+            bottom_wall = Line(self.__bottom_right_dot, self.__bottom_left_dot)
+            self.__window.draw_line(bottom_wall, 'red')
+
+        
