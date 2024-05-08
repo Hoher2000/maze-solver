@@ -1,5 +1,6 @@
 from tkinter import Tk, BOTH, Canvas
 
+
 class Window:
     def __init__(self, width, height) -> None:
         self.__root = Tk()
@@ -25,10 +26,12 @@ class Window:
     def draw_line(self, line, fill_color):
         line.draw(self.__canvas, fill_color)
 
+
 class Point:
     def __init__(self, x, y) -> None:
         self.x = x
         self.y = y
+
 
 class Line:
     def __init__(self, dot1, dot2) -> None:
@@ -40,6 +43,7 @@ class Line:
             self.dot1.x, self.dot1.y, self.dot2.x, self.dot2.y,
             fill=fill_color, width=2
         )
+
 
 class Cell:
     def __init__(self, x1, y1, x2, y2, window):
@@ -76,6 +80,3 @@ class Cell:
         color = 'gray' if undo else 'red'
         move_line = Line(self.__center, to_cell.__center)
         self.__window.draw_line(move_line, color)
-        
-
-        
