@@ -61,19 +61,15 @@ class Cell:
         self._window = window
 
     def draw(self):
-        if self.has_left_wall:
-            left_wall = Line(self._top_left_dot, self._bottom_left_dot)
-            self._window.draw_line(left_wall, 'black')
-        if self.has_right_wall:
-            right_wall = Line(self._top_right_dot, self._bottom_right_dot)
-            self._window.draw_line(right_wall, 'black')
-        if self.has_top_wall:
-            top_wall = Line(self._top_right_dot, self._top_left_dot)
-            self._window.draw_line(top_wall, 'black')
-        if self.has_bottom_wall:
-            bottom_wall = Line(self._bottom_right_dot, self._bottom_left_dot)
-            self._window.draw_line(bottom_wall, 'black')
-
+        left_wall = Line(self._top_left_dot, self._bottom_left_dot)
+        right_wall = Line(self._top_right_dot, self._bottom_right_dot)
+        top_wall = Line(self._top_right_dot, self._top_left_dot)
+        bottom_wall = Line(self._bottom_right_dot, self._bottom_left_dot)
+        sides = ['left', 'right', 'top', 'bottom']
+        for side in sides:
+            color = 'black' if eval(f'self.has_{side}_wall') else 'white'
+            eval(f'self._window.draw_line({side}_wall, color)')
+        
     def draw_move(self, to_cell, undo=False):
         if self._window is not to_cell._window:
             raise Exception('Cells are in different windows')
