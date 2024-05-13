@@ -52,6 +52,7 @@ class Cell:
         self.has_right_wall = True
         self.has_top_wall = True
         self.has_bottom_wall = True
+        self._visited = False
         self._top_left_dot = Point(x1, y1)
         self._top_right_dot = Point(x2, y1)
         self._bottom_left_dot = Point(x1, y2)
