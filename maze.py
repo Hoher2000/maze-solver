@@ -63,17 +63,23 @@ class Maze:
                 ):
                     to_visit.append((shift[k], shift[3-k]))
             if not to_visit:
-                self._cells[col][row].draw()
+                if self._window != None:
+                    self._cells[col][row].draw()
                 return
             delta_col, delta_row = random.choice(to_visit)
             new_col, new_row = col + delta_col, row + delta_row
             auto_index = [delta_row == -1, delta_col == 1, delta_row == 1, delta_col == -1].index(1)
             sides = ['top', 'right', 'bottom', 'left']
             side = sides[auto_index]
-            #neighbor_side = sides[auto_index-2]
+            # neighbor_side = sides[auto_index-2]
             exec(f'self._cells[col][row].has_{side}_wall = False')
-            #exec(f'self._cells[new_col][new_row].has_{neighbor_side}_wall = False')
+            # exec(f'self._cells[new_col][new_row].has_{neighbor_side}_wall = False')
             self._break_walls_r(new_col, new_row)
+
+    def _reset_cells_visited(self):
+        for col in range(self._num_cols):
+            for row in range(self._num_rows):
+                self._cells[col][row]._visited = False
             
 
         
