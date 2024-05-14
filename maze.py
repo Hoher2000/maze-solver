@@ -50,6 +50,10 @@ class Maze:
         self._cells[-1][-1].has_bottom_wall = False
         self._draw_cell(-1, -1)
 
+    def break_walls(self):
+        self._break_entrance_and_exit()
+        self._break_walls_r(0, 0)
+    
     def _break_walls_r(self, col, row):
         self._cells[col][row]._visited = True
         while True:
@@ -80,6 +84,35 @@ class Maze:
         for col in range(self._num_cols):
             for row in range(self._num_rows):
                 self._cells[col][row]._visited = False
+
+    def solve(self):
+        self._reset_cells_visited()
+        return self._solve_r(0, 0)
+    
+    def _solve_r(self, col, row):
+        self._animate()
+        self._cells[col][row]._visited = True
+        if col == self._num_cols - 1 and row == self._num_rows - 1:
+            return True
+        shift = (0, 1, 0, -1)
+        sides = ['top', 'right', 'bottom', 'left']
+        for k in range(4):
+            delta_col, delta_row = shift[k], shift[3-k]
+            new_col = col + delta_col
+            new_row = row + delta_row
+            side = sides[k]
+            if (
+                0 <= new_col < self._num_cols 
+                and 0 <= new_row < self._num_rows
+                and not eval(f'self._cells[col][row].has_{side}_wall')                
+                and not self._cells[new_col][new_row]._visited
+            ):
+                to_cell = self._cells[new_col][new_row]
+                self._cells[col][row].draw_move(to_cell, undo=False)
+                if self._solve_r(new_col, new_row):
+                    return True
+                self._cells[col][row].draw_move(to_cell, undo=True)
+        return False
             
 
         

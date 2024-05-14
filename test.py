@@ -26,7 +26,7 @@ class Tests(unittest.TestCase):
         )
         m._reset_cells_visited()
         self.assertEqual(
-            m._cells[5][5]._visited,
+            m._cells[0][9]._visited,
             0,
         )
 
